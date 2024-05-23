@@ -1,0 +1,42 @@
+body {
+    background-color: rgb(59, 61, 61);
+    color: antiquewhite;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.jumbo-color {
+    background-color: rgb(85, 85, 85);
+    border-radius: 25px;
+    color: whitesmoke;
+}
+
+.form-control {
+    background-color: rgb(85, 85, 85);
+}
+
+.wrapper {
+    flex: 1;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}    
+
+.post-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}

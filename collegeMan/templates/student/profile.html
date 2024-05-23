@@ -1,0 +1,212 @@
+{% extends "./base.html" %}
+
+
+{% block content %}
+<div id="ContentPlaceHolder1_divContainer" class="container-fluid bg-white rounded-2 px-4">
+    <div class="pagetitle">
+        <div class="row border-bottom">
+            <div class="col-md-10 mt-2 pt-2">
+                <nav class="d-flex">
+                    <div class="col-md-12 ">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url "student:Sindex" %}">Home</a></li>
+                            <li class="breadcrumb-item active">Student Profile</li>
+    
+                        </ol>
+                    </div>
+                    <div class="col-md-2 px-2 text-end pt-2">
+                        <a href="{% url "student:editProfile" %}" class="btn btn-primary btn-sm">Edit Profile</a>
+                     </div>
+                </nav>
+                
+            </div>
+
+        </div>
+        <div class="row mt-3">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <img id="ContentPlaceHolder1_imgStudentPhotograph" class="rounded-circle" style="height:144px;width:120px;" />
+                        <h5><strong><span id="ContentPlaceHolder1_lblStudentName" class="text-black align-middle">{{student.name}}</span></strong></h5>
+                        <h6><span><span id="ContentPlaceHolder1_Label22" class="text-black-50 align-middle">ERP ID:</span>
+                        <strong><span id="ContentPlaceHolder1_lblERPId" class="text-black align-middle">{{student.erp_id}}</span></strong></span></h6>
+                        <h6><span><span id="ContentPlaceHolder1_Label1" class="text-black-50 align-middle">Registration Date:</span>
+                        <strong><span id="ContentPlaceHolder1_lblRegistrationDate" class="text-black align-middle">{{student.registration_date}}</span></strong></span></h6>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <h5 class="text-center"><strong><span id="ContentPlaceHolder1_Label26" class="text-danger align-middle">For any changes, Contact to Registrar Office.</span></strong></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label5" class="col-form-label-sm text-black-50">Status: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblStudentType" class="col-form-label-sm text-black align-middle">{{student.status}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label15" class="col-form-label-sm text-black-50">Roll No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblRollNo" class="col-form-label-sm text-black align-middle">{{student.roll_no}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label20" class="col-form-label-sm text-black-50">Enrollment No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblEnrollmentNo" class="col-form-label-sm text-black align-middle">{{student.erp_id}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label2" class="col-form-label-sm text-black-50">Course: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblCourseName" class="col-form-label-sm text-black align-middle">{{student.course}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label3" class="col-form-label-sm text-black-50">Branch: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblBranchSection" class="col-form-label-sm text-black align-middle">{{student.branch}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label4" class="col-form-label-sm text-black-50">Semester: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblSemester" class="col-form-label-sm text-black align-middle">{{student.semester}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label11" class="col-form-label-sm text-black-50">Mobile No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblStudentMobileNo" class="col-form-label-sm text-black align-middle">{{student.mobile_no}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label12" class="col-form-label-sm text-black-50">EMail ID: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblStudentEMailId" class="col-form-label-sm text-black align-middle">{{student.email}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label14" class="col-form-label-sm text-black-50">College EMail: </span>
+                            </div>
+
+                        </div>
+
+                        <h5 class="card-title">Personal Details</h5>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label6" class="col-form-label-sm text-black-50">Father Name: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblFatherName" class="col-form-label-sm text-black align-middle">{{student.father_name}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label7" class="col-form-label-sm text-black-50">Mother Name: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblMotherName" class="col-form-label-sm text-black align-middle">{{student.mother_name}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label8" class="col-form-label-sm text-black-50">DoB: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblDoB" class="col-form-label-sm text-black align-middle">{{student.dob}}</span></strong>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label18" class="col-form-label-sm text-black-50">Aadhar Card No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblAadharCardNo" class="col-form-label-sm text-black align-middle">{{student.adhar_no}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label21" class="col-form-label-sm text-black-50">PAN Card No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblPANCardNo" class="col-form-label-sm text-black align-middle">{{student.pan_no}}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label9" class="col-form-label-sm text-black-50">Permanent Address: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblAddressPermanent" class="col-form-label-sm text-black align-middle">
+                                {{student.address}}</span></strong>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label10" class="col-form-label-sm text-black-50">Father Mobile No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblFatherMobileNo" class="col-form-label-sm text-black align-middle">
+                                {{student.father_mobile_no}}</span></strong>
+                                
+                            </div>
+                        </div>
+                        
+                        
+                       
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label23" class="col-form-label-sm text-black-50">Category: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblCategory" class="col-form-label-sm text-black align-middle">
+                                {{student.category}}</span></strong>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label24" class="col-form-label-sm text-black-50">Religion: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblReligion" class="col-form-label-sm text-black align-middle">
+                                {{student.religion}}</span></strong>
+                            </div>
+                        </div>
+
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+{% endblock %}

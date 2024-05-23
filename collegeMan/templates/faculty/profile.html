@@ -1,0 +1,142 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+<div id="ContentPlaceHolder1_divContainer" class="container-fluid bg-white rounded-2 px-4">
+    <div class="pagetitle">
+        <div class="row border-bottom">
+            <div class="col-md-10 mt-2 pt-2">
+                <nav class="d-flex">
+                    <div class="col-md-12 ">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                            <li class="breadcrumb-item active">Faculty Profile</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-2 px-2 text-end pt-2">
+                       <a href="{% url "faculty:editProfile" %}" class="btn btn-primary btn-sm">Edit Profile</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <img id="ContentPlaceHolder1_imgFacultyPhotograph" class="rounded-circle" style="height:144px;width:120px;" src="{{ faculty.photo_url }}" />
+                        <h5><strong><span id="ContentPlaceHolder1_lblFacultyName" class="text-black align-middle">{{ faculty.name }}</span></strong></h5>
+                        <h6><span><span id="ContentPlaceHolder1_Label22" class="text-black-50 align-middle">Faculty ID:</span>
+                        <strong><span id="ContentPlaceHolder1_lblFacultyId" class="text-black align-middle">{{ faculty.faculty_id }}</span></strong></span></h6>
+                        <h6><span><span id="ContentPlaceHolder1_Label1" class="text-black-50 align-middle">Joining Date:</span>
+                        <strong><span id="ContentPlaceHolder1_lblJoiningDate" class="text-black align-middle">{{ faculty.joining_date }}</span></strong></span></h6>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <h5 class="text-center"><strong><span id="ContentPlaceHolder1_Label26" class="text-danger align-middle">For any changes, Contact the Registrar Office.</span></strong></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label5" class="col-form-label-sm text-black-50">Status: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblStatus" class="col-form-label-sm text-black align-middle">{{ faculty.role }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label15" class="col-form-label-sm text-black-50">Designation: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblDesignation" class="col-form-label-sm text-black align-middle">{{ faculty.designation }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label20" class="col-form-label-sm text-black-50">Department: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblDepartment" class="col-form-label-sm text-black align-middle">{{ faculty.department }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label2" class="col-form-label-sm text-black-50">Email: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblEmail" class="col-form-label-sm text-black align-middle">{{ faculty.email }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label11" class="col-form-label-sm text-black-50">Mobile No.: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblMobileNo" class="col-form-label-sm text-black align-middle">{{ faculty.mobile_no }}</span></strong>
+                            </div>
+                        </div>
+                        
+                        <h5 class="card-title">Personal Details</h5>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label6" class="col-form-label-sm text-black-50">Father Name: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblFatherName" class="col-form-label-sm text-black align-middle">{{ faculty.father_name }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label7" class="col-form-label-sm text-black-50">Mother Name: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblMotherName" class="col-form-label-sm text-black align-middle">{{ faculty.mother_name }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label8" class="col-form-label-sm text-black-50">DoB: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblDoB" class="col-form-label-sm text-black align-middle">{{ faculty.dob }}</span></strong>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-lg-3 col-md-4 label">
+                                <span id="ContentPlaceHolder1_Label43" class="col-form-label-sm text-black-50">Gender: </span>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <strong><span id="ContentPlaceHolder1_lblGender" class="col-form-label-sm text-black align-middle">{{ faculty.gender }}</span></strong>
+                            </div>
+                        </div>
+                        
+                        <h5 class="card-title">Subjects Taught</h5>
+                        <Table class="table table-striped table-bordered table-hover">
+                            <tr>
+                                <th>Subject</th>
+                                <th>Code</th>
+                                <th>Semester</th>
+                                <th>Branch</th>
+                            </tr>
+                            {% for subject in subjects %}
+                            <tr>
+                                <td><a href="{% url "faculty:attendanceBySubject" subject.id  %}"  >{{ subject.name }}</a></td>
+                                <td>{{ subject.code }}</td>
+                                <td>{{ subject.semester }}</td>
+                                <td>{{ faculty.department }}</td>
+                            </tr>
+                            {% endfor %}
+                        </Table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

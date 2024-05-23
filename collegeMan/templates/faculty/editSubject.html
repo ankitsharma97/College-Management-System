@@ -1,0 +1,51 @@
+{%extends './base.html'%} {%load static%}{%block content%}
+<nav class="d-flex">
+    <div class="col-md-12 ">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+            <li class="breadcrumb-item active">Subjects</li>
+        </ol>
+    </div>
+</nav>
+<div class="col-sm-12 ">
+    {%if Role.name == 'HOD'%}
+    <a class="btn btn-success btn-lg" href="{% url "faculty:addSubject" 0 %}">Add Subject</a>
+    {%endif%}
+    <h4 class="text-center alert alert-info mt-3">Subjects</h4>
+    {%if subjects%}
+    <table class=" bg-light m-1 border">
+        <thead>
+            <tr class="text-center border">
+                <th scope="col" style="width: 20%;">Subject ID</th>
+                <th scope="col" style="width: 20%;">Subject Code</th>
+                <th scope="col" style="width: 20%;">Subject Name</th>
+                <th scope="col" style="width: 30%;">Semester</th>
+                {%if Role.name == 'HOD'%}
+                <th scope="col" style="width: 10%;">Action</th>
+                {%endif%}
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr class="text-center border">
+                <td>{{ subject.id }}</td>
+                <td>
+                    {{subject.code}}
+                </td>
+                <td>
+                    <a href="{% url "faculty:attendanceBySubject" subject.id  %}"  >{{ subject.name }}</a>
+                </td>
+                <td>{{ subject.semester }}</td>
+                {%if Role.name == 'HOD'%}
+                <td>
+                    <a class="btn btn-warning btn-sm" href="{% url "faculty:addSubject" subject.id %}">Edit</a>
+                    <a class="btn btn-danger btn-sm my-1" href="{% url "faculty:deleteSubject" subject.id %}">Del</a>
+                </td>
+                {%endif%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>{%endblock content%}

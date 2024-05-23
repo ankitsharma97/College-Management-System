@@ -1,0 +1,52 @@
+{% extends "./base.html" %}
+{% load attendance_filters %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">AddStudent</li>
+            </ol>
+        </div>
+    </nav>
+    
+    <div class="card">
+        <div class="card-header">
+            HOD/Add Student
+        </div>
+        <div class="card-body">
+            {% if message %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+            <!-- Filter Form -->
+            <form method="post" class="form-row align-items-center" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-md-4 mb-3">
+                    <label for="semester" class="mr-2">Select Semester:</label>
+                    <select name="semester" id="semester" class="form-control">
+                        {% for sem in semesters %}
+                            <option value="{{ sem.id }}" {% if selected_sem_id == sem.id|stringformat:"s" %}selected{% endif %}>{{ sem.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="branch" class="mr-2">Branch:</label>
+                    <input type="text" name="branch" id="branch" class="form-control" value="{{ branch }}" readonly>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="stu_data" class="mr-2">Upload Student Excel Data:</label>
+                    <input type="file" name="stu_data" id="stu_data" class="form-control-file">
+                </div>
+                
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Save Students</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

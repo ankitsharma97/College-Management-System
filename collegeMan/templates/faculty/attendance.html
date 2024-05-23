@@ -1,0 +1,91 @@
+{% extends "./base.html" %}
+{% load attendance_filters %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">Attendance</li>
+            </ol>
+        </div>
+    </nav>
+    <!-- Filter Form -->
+    <form method="post" class="form-row align-items-center mb-4">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="attendance_filter">
+        <div class="d-flex">
+
+            <div class="col-12 col-md-6 mb-3">
+                <label for="subject" class="mr-2">Select Subject:</label>
+                <select name="subject" id="subject" class="form-control">
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}" {% if selected_subject_id == subject.id|stringformat:"s" %}selected{% endif %}>{{ subject.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="col-12 col-md-6 mb-3">
+                <label for="class_times" class="mr-2">Select Time-Period:</label>
+                <select name="class_times" id="class_times" class="form-control">
+                    {% for time in class_times %}
+                        <option value="{{ time.id }}" {% if selected_class_times_id == time.id|stringformat:"s" %}selected{% endif %}>{{ time }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="px-5 mt-4 pt-2 ">
+                <button type="submit" name="h" value="Filter" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+
+        {% if message %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">{{ message }}</div>
+            </div>
+        {% endif %}
+        
+        <input type="hidden" name="action" value="attendance_update">
+        
+        <div class="col-12 table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Name</th>
+                        <th>Roll No</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attendance in attendance_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ attendance.student.name }}</td>
+                        <td>{{ attendance.student.roll_no }}</td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="attendance_{{ attendance.student.id }}" value="present" id="present_{{ attendance.student.id }}" {% if attendance.status %}checked{% endif %}>
+                                <label class="form-check-label" for="present_{{ attendance.student.id }}">Present</label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="attendance_{{ attendance.student.id }}" value="absent" id="absent_{{ attendance.student.id }}" {% if not attendance.status %}checked{% endif %}>
+                                <label class="form-check-label" for="absent_{{ attendance.student.id }}">Absent</label>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-success">Save Attendance</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

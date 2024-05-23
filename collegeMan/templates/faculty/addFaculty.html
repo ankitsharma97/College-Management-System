@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">faculty</li>
+            </ol>
+        </div>
+    </nav>
+    
+    {% if faculty is None %}
+    <h1 class="mb-4">Add Faculty</h1>
+    {% else %}
+    <h1 class="mb-4">Edit Faculty</h1>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ faculty.name|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" class="form-control" id="department" name="department" value="{{ department }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ faculty.email|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" {% if faculty is not None %} placeholder="Leave blank to keep current password" {% else %} required {% endif %}>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="">Select Role</option>
+                {% for role in roles %}
+                    <option value="{{ role.id }}" {% if faculty and faculty.role.id == role.id %}selected{% endif %}>{{ role.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if faculty is None %}ADD{% else %}Edit{% endif %}</button>
+    </form>
+</div>
+{% endblock %}

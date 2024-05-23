@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Notices</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Posted By</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notice in notices %}
+                <tr>
+                    <td>{{ notice.Title }}</td>
+                    <td>{{ notice.Description }}</td>
+                    <td>{{ notice.date }}</td>
+                    <td>{{ notice.by }}</td>
+                    <td>{{ notice.who }}</td>
+                    <td>{{ notice.category }}</td>
+                    <td>
+                        <!-- Button to Trigger Modal -->
+                        <button class="btn btn-sm btn-dark border rounded" data-toggle="modal" data-target="#modal{{ notice.id }}">View</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal{{ notice.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ notice.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel{{ notice.id }}">View Notice</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Notice details -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>{{ notice.Title }}</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p>{{ notice.Description }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <p><strong>Posted By:</strong> {{ notice.by }}</p>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <p><strong>Date:</strong> {{ notice.date }}</p>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <p><strong>Category:</strong> {{ notice.category }}</p>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <p><strong>Department:</strong> {{ notice.department }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $('.modal').modal({
+            show: false
+        });
+    });
+</script>
+{% endblock %}

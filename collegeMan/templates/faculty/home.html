@@ -1,0 +1,36 @@
+{% extends "faculty/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Today's Classes</h2>
+    <strong>Today's Date: {{ today_date }}</strong>
+    {% if today_class %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col">Branch</th>
+                    <th scope="col">Timing</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class in today_class %}
+                <tr>
+                    <td>{{ class.subject }}</td>
+                    <td>{{ class.semester }}</td>
+                    <td>{{ class.department }}</td>
+                    <td>{{ class.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No classes scheduled for today.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

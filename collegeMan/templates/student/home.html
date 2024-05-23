@@ -1,0 +1,66 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ student.name }}!</h1>
+        <p class="lead">This is your student portal. Here you can access your profile, view your attendance, check your grades, and much more.</p>
+        <hr class="my-4">
+        <p>Use the navigation bar to explore different sections.</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Profile
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage your profile</h5>
+                    <p class="card-text">Update your personal information and settings.</p>
+                    <a href="{% url "student:profile" %}" class="btn btn-primary">Go to Profile</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Attendance
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Check your attendance</h5>
+                    <p class="card-text">View your attendance records and stats.</p>
+                    <a href="{% url "student:attendance" %}" class="btn btn-primary">View Attendance</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Grades
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">View your grades</h5>
+                    <p class="card-text">Check your academic performance and grades.</p>
+                    <a href="{% url "student:marks" %}" class="btn btn-primary">View Grades</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Notifications
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Latest updates</h5>
+                    <p class="card-text">Stay informed with the latest news and notifications.</p>
+                    <a href="{% url "student:notice" %}" class="btn btn-primary">View Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

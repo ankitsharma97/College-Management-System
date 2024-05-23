@@ -1,0 +1,44 @@
+{% extends "./base.html" %}
+
+{% load  attendance_filters%}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">{{subject.name}}</li>
+            </ol>
+        </div>
+    </nav>
+    <h1>Attendance of {{ subject.name }}</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                {% for date in unique_dates %}
+                    <th>{{ date }}</th>
+                {% endfor %}
+                <th>Total Classes</th>
+                <th>Total Attended</th>
+                <th>Attendance % </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for student, attendance in attendance_data.items %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    {% for date in unique_dates %}
+                        <td>{{ attendance|get_item:date }}</td>
+                    {% endfor %}
+                    <td>{{ attendance.total_classes }}</td>
+                    <td>{{ attendance.total_attended }}</td>
+                    <td>{{ attendance.attendance_percentage }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

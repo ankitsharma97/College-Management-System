@@ -1,0 +1,61 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">subject</li>
+            </ol>
+        </div>
+    </nav>
+    {% if subject is None %}
+    <h2 class="mb-4">Add Subject</h2>
+    {% else %}
+    <h2 class="mb-4">Edit Subject</h2>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="code" class="form-label">Code</label>
+            <input type="text" class="form-control" id="code" name="code" value="{{ subject.code|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ subject.name|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            <select class="form-select" id="semester" name="semester" required>
+                <option value="">Select Semester</option>
+                {% for semester in semesters %}
+                    <option value="{{ semester.id }}" {% if subject and subject.semester.id == semester.id %}selected{% endif %}>{{ semester.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="employee_name" class="form-label">Employee Name</label>
+            <select class="form-select" id="employee_name" name="employee_name" required>
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                {{ employee.id }}
+                    <option value="{{ employee.id }}" {% if subject and subject.employee_name.id == employee.id %}selected{% endif %}>{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="subject_type" class="form-label">Subject Type</label>
+            <select class="form-select" id="subject_type" name="subject_Type" required>
+                <option value="Theory" {% if subject and subject.subject_Type == 'Theory' %}selected{% endif %}>Theory</option>
+                <option value="Practical" {% if subject and subject.subject_Type == 'Practical' %}selected{% endif %}>Practical</option>
+            </select>
+        </div>
+        {% if subject is None %}
+        <button type="submit" class="btn btn-primary">Add Subject</button>
+        {% else %}
+        <button type="submit" class="btn btn-primary">Edit Subject</button>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

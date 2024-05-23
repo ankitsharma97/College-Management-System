@@ -1,0 +1,109 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div id="ContentPlaceHolder1_divContainer" class="container-fluid bg-white rounded-2 px-4">
+    <div class="row justify-content-center">
+        <div class="card mb-2 w-100">
+            <div class="card-body mt-3">
+                <div id="divPrint">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive w-100">
+                                <table class="table table-bordered border-primary w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="col-md-6 col-form-label-sm text-dark opacity-75 text-start">Student Name</th>
+                                            <th scope="col" class="col-md-2 col-form-label-sm text-dark opacity-75 text-center">Roll No.</th>
+                                            <th scope="col" class="col-md-1 col-form-label-sm text-dark opacity-75 text-center">Section</th>
+                                            <th scope="col" class="col-md-1 col-form-label-sm text-dark opacity-75 text-center">Sem</th>
+                                            <th scope="col" class="col-md-2 col-form-label-sm text-dark opacity-75 text-center">Registration Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-start">{{ student.name }}</td>
+                                            <td class="text-center">{{ student.roll_no }}</td>
+                                            <td class="text-center">{{ student.section }}</td>
+                                            <td class="text-center">{{ student.semester }}</td>
+                                            <td class="text-center">{{ student.registration_date }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h4>1st Sessional</h4>
+                                <div>
+                                    <table class="table table-bordered w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="background-color:White;border-collapse:collapse;">
+                                        <tr align="center" valign="middle" style="color:White;background-color:Black;font-family:Calibri;font-size:12px;font-weight:bold;height:40px;">
+                                            <th scope="col">S. No.</th>
+                                            <th scope="col">Subject Code</th>
+                                            <th align="left" scope="col" style="width:320px;">Subject Name</th>
+                                            <th align="left" scope="col">Subject Type</th>
+                                            <th scope="col">Faculty Code</th>
+                                            <th align="left" scope="col" style="width:200px;">Faculty Name</th>
+                                            <th align="center" scope="col" style="width:64px;">Marks Obt.</th>
+                                            <th align="center" scope="col" style="width:64px;">Maximum Marks</th>
+                                            <th align="center" scope="col" style="width:64px;">UpdatedAt</th>
+                                        </tr>
+                                        {% for mark in marks %}
+                                            {% if mark.sessionalno.id == 1 %}
+                                            <tr style="height:40px;">
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ mark.subject.code }}</td>
+                                                <td>{{ mark.subject.name }}</td>
+                                                <td>{{ mark.subject.subject_Type }}</td>
+                                                <td>{{ mark.faculty.id }}</td>
+                                                <td>{{ mark.faculty.name }}</td>
+                                                <td>{{ mark.marks }}</td>
+                                                <td>15</td>
+                                                <td>{{ mark.date }}</td>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <h4>2nd Sessional</h4>
+                                <div>
+                                    <table class="table table-bordered w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="background-color:White;border-collapse:collapse;">
+                                        <tr align="center" valign="middle" style="color:White;background-color:Black;font-family:Calibri;font-size:12px;font-weight:bold;height:40px;">
+                                            <th scope="col">S. No.</th>
+                                            <th scope="col">Subject Code</th>
+                                            <th align="left" scope="col" style="width:320px;">Subject Name</th>
+                                            <th align="left" scope="col">Subject Type</th>
+                                            <th scope="col">Faculty Code</th>
+                                            <th align="left" scope="col" style="width:200px;">Faculty Name</th>
+                                            <th align="center" scope="col" style="width:64px;">Marks Obt.</th>
+                                            <th align="center" scope="col" style="width:64px;">Maximum Marks</th>
+                                            <th align="center" scope="col" style="width:64px;">UpdatedAt</th>
+                                        </tr>
+                                        {% for mark in marks %}
+                                            {% if mark.sessionalno.id == 2 %}
+                                            <tr style="height:40px;">
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ mark.subject.code }}</td>
+                                                <td>{{ mark.subject.name }}</td>
+                                                <td>{{ mark.subject.subject_Type }}</td>
+                                                <td>{{ mark.faculty.id }}</td>
+                                                <td>{{ mark.faculty.name }}</td>
+                                                <td>{{ mark.marks }}</td>
+                                                <td>15</td>
+                                                <td>{{ mark.date }}</td>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div class="hero-content text-center mt-1">
+                            <input name="ctl00$ContentPlaceHolder1$btnPrint" type="button" id="ContentPlaceHolder1_btnPrint" class="btn btn-outline-primary" value="Print" onclick="javascript: CallPrint('divPrint')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

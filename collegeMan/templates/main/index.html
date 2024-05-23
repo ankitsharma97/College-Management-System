@@ -1,0 +1,57 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1>Welcome to RECA Management System</h1>
+            <p class="lead">An integrated platform for students and faculty members</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <img src="{% static 'defaultImg/student.jpeg' %}" class="card-img-top" alt="Student">
+                <div class="card-body">
+                    <h5 class="card-title">For Students</h5>
+                    <p class="card-text">Our platform offers a range of features for students including:</p>
+                    <ul>
+                        <li>View and manage your class schedule</li>
+                        <li>Track attendance and view attendance history</li>
+                        <li>Access sessional marks and academic performance</li>
+                        <li>Stay updated with the latest notices</li>
+                        <li>Update your profile and personal information</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <img src="{% static 'defaultImg/teacher.jpeg' %}" class="card-img-top" alt="Teacher">
+                <div class="card-body">
+                    <h5 class="card-title">For Faculty</h5>
+                    <p class="card-text">Our platform offers a range of features for faculty members including:</p>
+                    <ul>
+                        <li>Manage class schedules and timetables</li>
+                        <li>Record and track student attendance</li>
+                        <li>Enter and update sessional marks</li>
+                        <li>Post notices and announcements</li>
+                        <li>Access and update personal profiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2 class="mb-4">Get Started</h2>
+            <a href="{% url 'main:login' %}" class="btn btn-primary btn-lg mx-2">Login</a>
+            <a href="{% url 'student:signUp' %}" class="btn btn-secondary btn-lg mx-2">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

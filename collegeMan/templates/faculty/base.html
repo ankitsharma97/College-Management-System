@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Student</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
+            .sidebar {
+                height: 100vh;
+                overflow-y: auto; /* Add scrollbar if content exceeds height */
+            }
+            .sidebar span:hover {
+                background-color: transparent;
+                color: inherit;
+            }
+            .sidebar.fliph + .col-lg-10 {
+                width: 100%;
+            }
+
+            @media (max-width: 768px) {
+                .container-fluid {
+                    padding: 0;
+                }
+                .col-2 {
+                    width: 100%;
+                    padding: 0;
+                }
+                .col {
+                    width: 100%;
+                    padding: 0;
+                }
+                
+            }
+            .faculty-row {
+                margin-bottom: 10px; /* Adjust the value to your desired gap size */
+            }
+            
+            .faculty-row:last-child {
+                margin-bottom: 0;
+            }
+            
+
+        </style>
+    </head>
+<body >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-lightsky text"> 
+
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="{% static "./defaultimg/logo1.png" %}" alt="Logo" class="me-2" style="height: 50px;">
+            <span>RECA</span>
+        </a>
+
+
+        <a href="#menu-toggle" id="menu-toggle" class="navbar-brand">
+            <span class="navbar-toggler-icon"></span>
+        </a> 
+
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto ">
+                    
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle navbar-brand d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{% static "./defaultimg/logo1.png" %}" alt="Logo" class="me-2" style="height: 30px;">
+                       {{request.session.name}}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">My-PhotoGraph</a>
+                        <a class="dropdown-item" href="{% url "main:changePass" %}">Change-Password</a>
+                        <a class="dropdown-item" href="{% url "main:logout" %}">Sign-Out</a>
+                    </div>
+                </ul>
+            </div>                                    
+        </div>
+    </nav>
+    <div id="wrapper" class="toggled ">
+        <div id="sidebar-wrapper" class="bg-light">
+            <ul class="sidebar-nav">
+                <aside >
+                    <div  class="sidebar bg-light ">
+                      
+                      <ul class="list-sidebar">
+                        <li> <a href="{% url "faculty:profile" %}" class="text-dark"><i class="fa fa-user text-dark"></i> <span class="nav-label text-dark">My Profile</span></a> </li>
+                        <li> <a href="{% url "faculty:EditAttendance" %}" class="text-dark"><i class="fa fa-check-circle text-dark"></i> <span class="nav-label text-dark">Take Attendance</span></a> </li>
+                        <li> 
+                            <a href="{% url "faculty:updateSchedule" %}" class="text-dark">
+                                <i class="fa fa-book text-dark">
+
+                                </i> 
+                                <span class="nav-label text-dark">
+
+                                    {% if request.session.type %}
+                                        {% with type_dict=request.session.type %}
+
+
+                                            {% if type_dict == 'HOD' %}
+                                                Update
+                                            {% else %}
+                                                View
+                                            {% endif %}
+                                            classes
+                                </span>
+                            </a> 
+                        </li>
+                        
+                        <li> <a href="{% url "faculty:editSubject" %}" class="text-dark"><i class="fa fa-book text-dark"></i> <span class="nav-label text-dark">
+                            {% if type_dict == 'HOD' %}
+                               Update
+                            {% else %}
+                                View
+                            {% endif %}
+                                 Subject</span></a> 
+                        </li>
+                        <li> <a href="{% url "faculty:editFaculty" %}" class="text-dark"><i class="fa fa-edit text-dark"></i> <span class="nav-label text-dark">
+                            {% if type_dict == 'HOD' %}
+                            Update
+                            {% else %}
+                                View
+                            {% endif %}
+                            Faculty</span></a> </li>
+                            {% if type_dict == 'HOD' %}
+                            <li> <a href="{% url "faculty:addStudent" %}" class="text-dark"><i class="fa fa-user text-dark"></i> <span class="nav-label text-dark">Add Students</span></a> </li>
+                            {% endif %}
+                        {% endwith %}
+                        {% endif %}
+                        
+                        <li> <a href="{% url "faculty:sessionalMarks" %}" class="text-dark"><i class="fa fa-edit text-dark"></i> <span class="nav-label text-dark">UpDate Marks</span></a> </li>
+                        <li> <a href="{% url "faculty:Addnotice" %}" class="text-dark"><i class="fa fa-bell text-dark"></i> <span class="nav-label text-dark">Add Notices</span></a> </li>
+                    </ul>
+                    
+                  </div> 
+                </aside>
+            </ul>
+        </div> 
+        <div class="container-fluid " id="page-content-wrapper">
+            <div class="container-fluid">
+                {% block content %}
+                {% endblock  %}
+            </div>
+        </div> 
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script> 
+    <script>
+      $(function(){
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(window).resize(function(e) {
+          if($(window).width()<=768){
+            $("#wrapper").removeClass("toggled");
+          }else{
+            $("#wrapper").addClass("toggled");
+          }
+        });
+      });
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "faculty:Findex" %}">Home</a></li>
+                <li class="breadcrumb-item active">Sessional Marks</li>
+            </ol>
+        </div>
+    </nav>
+
+
+    <form method="post" class="form-row align-items-center mb-4">
+        {% csrf_token %}
+            <div class="d-flex">
+                <div class="col-12 col-md-6 mb-">
+                    <label for="subject" class="mr-2">Select Subject:</label>
+                    <select name="subject" id="subject" class="form-control">
+                        {% for subject in subjects %}
+                        <option value="{{ subject.id }}" {% if selected_subject_id == subject.id|stringformat:"s" %}selected{% endif %}>{{ subject.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-6 mb-">
+                    <label for="sessional" class="mr-2">Select Sessional:</label>
+                    <select name="sessional" id="sessional" class="form-control">
+                        {% if sessionalno is not NONE %}
+                            <option value="{{ sessionalno.id }}">{{ sessionalno.name }}</option>
+                        {% else %}
+                            {% for sessional_item in sessionals %}
+                            <option value="{{ sessional_item.id }}">{{ sessional_item.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+
+                    </select>
+                </div>
+
+                <div class="px-5 mt-4 pt-2">
+                    <button type="submit" name="h" value="Filter" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        <input type="hidden" name="action" value="update_marks">
+
+
+    <div class="table-responsive pt-2">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>S. No.</th>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sessional_mark in sessional_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ sessional_mark.student.name }}</td>
+                    <td>{{ sessional_mark.student.roll_no }}</td>
+                    <td>
+                        <input type="text" name="{{ sessional_mark.student.id }}_marks" value="{{ sessional_mark.marks }}" class="form-control">
+                    </td>
+                    <td>
+                        {% if sessional_mark.marks|add:0 >= 16 %}
+                            <span class="badge badge-success">A</span>
+                        {% elif sessional_mark.marks|add:0 >= 12 %}
+                            <span class="badge badge-primary">B</span>
+                        {% elif sessional_mark.marks|add:0 >= 8 %}
+                            <span class="badge badge-info">C</span>
+                        {% elif sessional_mark.marks|add:0 >= 4 %}
+                            <span class="badge badge-warning">D</span>
+                        {% else %}
+                            <span class="badge badge-danger">F</span>
+                        {% endif %}
+                    </td>
+                    
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-success">Save Marks</button>
+    </div>
+</form>
+</div>
+{% endblock %}

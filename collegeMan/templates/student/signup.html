@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="mb-0 text-center">Student SignUp</h1>
+                </div>
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter student name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roll_no" class="form-label">Roll No:</label>
+                            <input type="text" class="form-control" id="roll_no" name="roll_no" placeholder="Enter roll number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="branch" class="form-label">Branch:</label>
+                            <select class="form-control" id="branch" name="branch">
+                                {% for branch in branches %}
+                                    <option value="{{ branch.id }}">{{ branch.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="semester" class="form-label">Semester:</label>
+                            <select class="form-control" id="semester" name="semester">
+                                {% for sem in semesters %}
+                                    <option value="{{ sem.id }}">{{ sem.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile_no" class="form-label">Mobile No:</label>
+                            <input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="Enter mobile number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">SignUp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

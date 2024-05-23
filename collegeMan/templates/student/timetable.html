@@ -1,0 +1,120 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+<div id="ContentPlaceHolder1_divContainer" class="container-fluid bg-white rounded-2 px-4">
+    <div class="row justify-content-center">
+        <div class="card mb-2 w-100">
+            <div class="card-body mt-3">
+                <div id="divPrint">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive w-100">
+                                <table class="table table-bordered border-primary w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="col-md-6 col-form-label-sm text-dark opacity-75 text-start">Student Name</th>
+                                            <th scope="col" class="col-md-2 col-form-label-sm text-dark opacity-75 text-center">Roll No.</th>
+                                            <th scope="col" class="col-md-1 col-form-label-sm text-dark opacity-75 text-center">Section</th>
+                                            <th scope="col" class="col-md-1 col-form-label-sm text-dark opacity-75 text-center">Sem</th>
+                                            <th scope="col" class="col-md-2 col-form-label-sm text-dark opacity-75 text-center">Registration Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-start">
+                                                <span id="ContentPlaceHolder1_lblStudentName" class="col-form-label-sm text-black fw-bold">ABHIMANYU SINGH(220100006)</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="ContentPlaceHolder1_lblRollNo" class="col-form-label-sm text-black fw-bold">2200330100006</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="ContentPlaceHolder1_lblBranchName" class="col-form-label-sm text-black fw-bold">CSE-A</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="ContentPlaceHolder1_lblSemester" class="col-form-label-sm text-black fw-bold">4(G1)</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="ContentPlaceHolder1_lblRegistrationDate" class="col-form-label-sm text-black fw-bold">22-Apr-2024</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <table class="table table-bordered w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="background-color:White;border-collapse:collapse;">
+                                        <thead>
+                                            <tr align="center" valign="middle" style="color:WhiteSmoke; background-color:SlateGray; font-family:Calibri; font-size:Small; font-weight:bold;">
+                                                <th scope="col">Day/Time</th>
+                                                <th scope="col">Lect. No. : 01 09:30-10:20</th>
+                                                <th scope="col">Lect. No. : 02 10:20-11:10</th>
+                                                <th scope="col">Lect. No. : 03 11:10-12:00</th>
+                                                <th scope="col">Lect. No. : 04 12:00-12:50</th>
+                                                <th scope="col">Lunch Break 12:50-02:20</th>
+                                                <th scope="col">Lect. No. : 06 02:20-04:00</th>
+                                                <th scope="col">Lect. No. : 07 04:00-05:00</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for day, lectures in schedule_dict.items %}
+                                            <tr align="center" style="color:Black; background-color:White; font-family:Calibri; font-size:Small; font-weight:bold;">
+                                                <td align="left" style="color:White; background-color:#006699; font-weight:bold; width:160px;">{{ day }}</td>
+                                                {% for lecture in lectures %}
+
+                                                    <td>{{ lecture.subject.code }}</td>
+
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <table class="table table-bordered" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView2" style="background-color:White; width:100%; border-collapse:collapse;">
+                                    <thead>
+                                        <tr align="center" valign="middle" style="color:Black; background-color:SlateGray; font-family:Calibri; font-size:Small; font-weight:bold; height:28px;">
+                                            <th scope="col" style="width:40px;">S. No.</th>
+                                            <th scope="col" style="width:60px;">Subject Type</th>
+                                            <th scope="col" style="width:280px;">Subject Name</th>
+                                            <th scope="col" style="width:80px;">Subject Code</th>
+                                            <th scope="col" style="width:200px;">Employee Name</th>
+                                            <th scope="col" style="width:80px;">Department Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for subject in subjects %}
+                                        {% if subject.code != "000" %}
+                                        <tr align="left" style="color:Black; background-color:White; font-family:Calibri; font-size:Small; font-weight:normal; height:28px;">
+                                            <td align="center">{{ forloop.counter }}</td>
+                                            <td>{{ subject.subject_Type }}</td>
+                                            <td>{{ subject.name }}</td>
+                                            <td align="center">{{ subject.code }}</td>
+                                            <td>{{ subject.employee_name.name }}</td>
+                                            <td>{{ subject.employee_name.department }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div class="hero-content text-center mt-1">
+                            <input name="ctl00$ContentPlaceHolder1$btnPrint" type="button" id="ContentPlaceHolder1_btnPrint" class="btn btn-sm btn-outline-primary" value="Print" onclick="javascript: CallPrint(&#39;divPrint&#39;)" />
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnClose" value="Close" id="ContentPlaceHolder1_btnClose" class="btn btn-sm btn-outline-secondary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
