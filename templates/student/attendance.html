@@ -34,34 +34,36 @@
                     </tbody>
                 </table>
             </div>
-            <table class="table table-bordered w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="background-color:White;border-collapse:collapse;">
-                <tbody>
-                    <tr align="center" valign="middle" style="color:White;background-color:Black; font-family:Calibri; font-size: 11px; font-weight: bold;">
-                        <th scope="col">Date</th>
-                        {% for class_time in class_times %}
-                            <th scope="col">{{ class_time }}</th>
+            <div class="table-responsive w-100">
+                <table class="table table-bordered w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="background-color:White;border-collapse:collapse;">
+                    <tbody>
+                        <tr align="center" valign="middle" style="color:White;background-color:Black; font-family:Calibri; font-size: 11px; font-weight: bold;">
+                            <th scope="col">Date</th>
+                            {% for class_time in class_times %}
+                                <th scope="col">{{ class_time }}</th>
+                            {% endfor %}
+                            <th scope="col">Total Present</th>
+                            <th scope="col">Total Class</th>
+                            <th scope="col">Percentage</th>
+                        </tr>
+                        {% for date, day_data, total_present, total_classes, percentage in daily_summary %}
+                        <tr align="center" style="color:Black;background-color:White; font-family:Calibri;font-size:11px; font-weight:bold;">
+                            <td align="left">{{ date }}</td>
+                            {% for status, subject_code in day_data %}
+                            <td style="background-color: {% if status == 1 %}LightGreen{% elif status == 0 %}LightCoral{% else %}LightGrey{% endif %};">
+                                {% if status == 1 %}Present {% elif status == 0 %}Absent{% else %}No Class{% endif %}
+                                <br>
+                                {{ subject_code }}
+                            </td>
                         {% endfor %}
-                        <th scope="col">Total Present</th>
-                        <th scope="col">Total Class</th>
-                        <th scope="col">Percentage</th>
-                    </tr>
-                    {% for date, day_data, total_present, total_classes, percentage in daily_summary %}
-                    <tr align="center" style="color:Black;background-color:White; font-family:Calibri;font-size:11px; font-weight:bold;">
-                        <td align="left">{{ date }}</td>
-                        {% for status, subject_code in day_data %}
-                        <td style="background-color: {% if status == 1 %}LightGreen{% elif status == 0 %}LightCoral{% else %}LightGrey{% endif %};">
-                            {% if status == 1 %}Present {% elif status == 0 %}Absent{% else %}No Class{% endif %}
-                            <br>
-                            {{ subject_code }}
-                        </td>
-                    {% endfor %}
-                        <td>{{ total_present }}</td>
-                        <td>{{ total_classes }}</td>
-                        <td>{{ percentage }}%</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            <td>{{ total_present }}</td>
+                            <td>{{ total_classes }}</td>
+                            <td>{{ percentage }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

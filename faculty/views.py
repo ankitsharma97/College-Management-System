@@ -1,6 +1,6 @@
 from datetime import date
 from pyexpat.errors import messages
-from turtle import pd
+import pandas as pd
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseBadRequest
 from student.models import Student, Attendance
@@ -215,6 +215,7 @@ def sessionalMarks(request):
         'error': error,
         
     })
+
 
 @faculty_required
 def updateSchedule(request):

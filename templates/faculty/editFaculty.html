@@ -13,36 +13,44 @@
     {%endif%}
     <h4 class="text-center alert alert-info mt-3">Faculties of {{Department}}</h4>
     {%if faculties%}
-    <table class="table bg-light m-1">
-        <thead>
-            <tr class="text-center">
-                <th scope="col" style="width: 20%;">Faculty ID</th>
-                <th scope="col" style="width: 20%;">Faculty Name</th>
-                <th scope="col" style="width: 20%;">Faculty Email</th>
-                <th scope="col" style="width: 30%;">Department</th>
-                {% if Role.name == 'HOD' %}
-                <th scope="col" style="width: 10%;">Action</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for faculty in faculties %}
-            <tr class="text-center faculty-row border">
-                <td>{{ faculty.id }}</td>
-                <td>{{ faculty.name }}</td>
-                <td><a href="">{{ faculty.email }}</a></td>
-                <td>{{ faculty.department }}</td>
-                {% if Role.name == 'HOD' %}
-                <td>
-                    <a class="btn btn-warning btn-sm" href="{% url "faculty:addFaculty" faculty.id %}">Edit</a>
-                    <a class="btn btn-danger btn-sm my-1" href="{% url "faculty:deleteFaculty" faculty.id %}">Del</a>
-                </td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered border-primary w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView2" style="background-color:White; width:100%; border-collapse:collapse;">
+
+                    <table class="table bg-light m-1">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col" style="width: 20%;">Faculty ID</th>
+                                <th scope="col" style="width: 20%;">Faculty Name</th>
+                                <th scope="col" style="width: 20%;">Faculty Email</th>
+                                <th scope="col" style="width: 30%;">Department</th>
+                                {% if Role.name == 'HOD' %}
+                                <th scope="col" style="width: 10%;">Action</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for faculty in faculties %}
+                            <tr class="text-center faculty-row border">
+                                <td>{{ faculty.id }}</td>
+                                <td>{{ faculty.name }}</td>
+                                <td><a href="">{{ faculty.email }}</a></td>
+                                <td>{{ faculty.department }}</td>
+                                {% if Role.name == 'HOD' %}
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{% url "faculty:addFaculty" faculty.id %}">Edit</a>
+                                    <a class="btn btn-danger btn-sm my-1" href="{% url "faculty:deleteFaculty" faculty.id %}">Del</a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </table>
+            </div>        
+        </div>        
+    </div>              
     {% endif %}
 
 </div>{%endblock content%}

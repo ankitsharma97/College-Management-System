@@ -19,108 +19,125 @@
     </div>
     {% endif %}
     <!-- Filter Form -->
-    <form method="post" class="form-row align-items-center ">
+    <form method="post" class="form-row align-items-center table-responsive ">
         {% csrf_token %}
-        <div class="d-flex col-10">
-            <div class="col-12 col-md-6 ">
-                <label for="semester" class="mr-2">Select Semester:</label>
-                <select name="semester" id="semester" class="form-control">
-                    {% for sem in semesters %}
-                        <option value="{{ sem.id }}" {% if selected_sem_id == sem.id|stringformat:"s" %}selected{% endif %} >{{ sem.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-    
-            <div class="col-12 col-md-6 ">
-                <label for="branch" class="mr-2">Select Branch:</label>
-                <select name="branch" id="branch" class="form-control">
-                        <option value="{{ branch.id }}" readonly >{{ branch.name }}</option>
-                </select>
-            </div>
-    
-            <div class="px-5 mt-4 pt-2">
-                <button type="submit" name="h" value="Filter" class="btn btn-primary">Filter</button>
-            </div>
-        </div>
-
-
-        <!-- Timetable -->
-        <div class="table-responsive mt-2">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Day/Time</th>
-                        {% for time in class_times %}
-                        <th>{{ time }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for day in working_days %}
-                    <tr>
-                        <td>{{ day }}</td>
-                        {% for time in class_times %}
-                        <td>
-                            <select name="{{ day.id }}_{{ time.id }}" class="form-control">
-                                {% for schedule in schedule_list %}
-                                    {% if schedule.day == day and schedule.time == time %}
-                                        {% for subject in subjects %}
-                                            {% if subject == schedule.subject %}
-                                                <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                                <option value="">-- Select Subject --</option>
-                                {%if request.session.type == 'HOD'%}
-                                    {% for subject in subjects %}
-                                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered border-primary w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView2" style="background-color:White; width:100%; border-collapse:collapse;">
+                        <div class="d-flex col-auto">
+                            <div class="col-auto ">
+                                <label for="semester" class="mr-2">Select Semester:</label>
+                                <select name="semester" id="semester" class="form-control">
+                                    {% for sem in semesters %}
+                                        <option value="{{ sem.id }}" {% if selected_sem_id == sem.id|stringformat:"s" %}selected{% endif %} >{{ sem.name }}</option>
                                     {% endfor %}
-                                {%endif%}
-                            </select>
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
+                                </select>
+                            </div>
                     
-                </tbody>
-            </table>
+                            <div class="col-auto ">
+                                <label for="branch" class="mr-2">Select Branch:</label>
+                                <select name="branch" id="branch" class="form-control">
+                                        <option value="{{ branch.id }}" readonly >{{ branch.name }}</option>
+                                </select>
+                            </div>
+                    
+                            <div class="px-5 mt-4 pt-2">
+                                <button type="submit" name="h" value="Filter" class="btn btn-primary">Filter</button>
+                            </div>
+                        </div>
+                
+                
+                        <!-- Timetable -->
+                        <div class="table-responsive mt-2">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Day/Time</th>
+                                        {% for time in class_times %}
+                                        <th>{{ time }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for day in working_days %}
+                                    <tr>
+                                        <td>{{ day }}</td>
+                                        {% for time in class_times %}
+                                        <td>
+                                            <select name="{{ day.id }}_{{ time.id }}" class="form-control">
+                                                {% for schedule in schedule_list %}
+                                                    {% if schedule.day == day and schedule.time == time %}
+                                                        {% for subject in subjects %}
+                                                            {% if subject == schedule.subject %}
+                                                                <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <option value="">-- Select Subject --</option>
+                                                {%if request.session.type == 'HOD'%}
+                                                    {% for subject in subjects %}
+                                                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                                    {% endfor %}
+                                                {%endif%}
+                                            </select>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        {%if request.session.type == 'HOD'%}
+                
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save Timetables</button>
+                            <a href="{% url "faculty:Findex" %}"class = "btn btn-sm btn-danger">Cancel</a>
+                        </div>
+                       
+                        {%endif%}
+                    </table>
+                </div>
+            </div>
         </div>
-        {%if request.session.type == 'HOD'%}
+    </form>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered border-primary w-100" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView2" style="background-color:White; width:100%; border-collapse:collapse;">
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-success">Save Timetables</button>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>S. No.</th>
+                                <th>Subject Type</th>
+                                <th>Subject Name</th>
+                                <th>Subject Code</th>
+                                <th>Employee Name</th>
+                                <th>Department Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subject in subjects %}
+                            {% if subject.code != "000" %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ subject.subject_Type }}</td>
+                                <td>{{ subject.name }}</td>
+                                <td>{{ subject.code }}</td>
+                                <td>{{ subject.employee_name.name }}</td>
+                                <td>{{ subject.employee_name.department }}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </table>
+            </div>
         </div>
-        <a href="{% url "faculty:Findex" %}"class = "btn btn-sm btn-danger">Cancel</a>
-        {%endif%}
-</form>
-<table class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>S. No.</th>
-                <th>Subject Type</th>
-                <th>Subject Name</th>
-                <th>Subject Code</th>
-                <th>Employee Name</th>
-                <th>Department Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for subject in subjects %}
-            {% if subject.code != "000" %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ subject.subject_Type }}</td>
-                <td>{{ subject.name }}</td>
-                <td>{{ subject.code }}</td>
-                <td>{{ subject.employee_name.name }}</td>
-                <td>{{ subject.employee_name.department }}</td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-        </tbody>
-</table>
     </div>
+               
 </div>
 {% endblock %}

@@ -1,136 +1,124 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Student</title>
-        {% load bootstrap5 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript %}
-        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <style>
-            .sidebar {
-                height: 100vh;
-                overflow-y: auto; /* Add scrollbar if content exceeds height */
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .sidebar {
+            height: 100vh;
+            overflow-y: auto; /* Add scrollbar if content exceeds height */
+        }
+        .sidebar span:hover {
+            background-color: transparent;
+            color: inherit;
+        }
+        .sidebar.fliph + .col-lg-10 {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0;
             }
-            .sidebar span:hover {
-                background-color: transparent;
-                color: inherit;
-            }
-            .sidebar.fliph + .col-lg-10 {
+            .col-2, .col {
                 width: 100%;
+                padding: 0;
             }
-
-            @media (max-width: 768px) {
-                .container-fluid {
-                    padding: 0;
+                .navbar-nav {
+                    text-align: center;
                 }
-                .col-2 {
-                    width: 100%;
-                    padding: 0;
+            
+                .navbar-nav .nav-item {
+                    margin: 0 auto;
                 }
-                .col {
-                    width: 100%;
-                    padding: 0;
+            
+                .navbar-brand {
+                    margin-left: auto;
+                    margin-right: auto;
                 }
-                .bg-lightsky {
-                    background-color: skyblue;
-                }
-                
-            }
-
-        </style>
-    </head>
+            
+            
+        }
+    </style>
+</head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light text"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
 
-        <a class="navbar-brand d-flex align-items-center" href="{% url "student:Sindex" %}">
-            <img src="{% static "./defaultimg/logo1.png" %}" alt="Logo" class="me2" style="height: 50px;">
-            <span>RECAzamgarh</span>
+        <a class="navbar-brand d-flex align-items-center d-sm-none " href="{% url 'student:Sindex' %}">
+            <img src="{% static 'defaultimg/logo1.jpeg' %}" alt="Logo" class="me2" style="height: 50px;">
+            <span class="d-sm-none "  >RECAzamgarh</span>
+        </a>
+        <button class="navbar-toggler px-2" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <a href="#menu-toggle" id="menu-toggle" class="navbar-brand "> <!-- Add d-lg-none to hide on larger screens -->
+            <i class="fas fa-bars"></i> <!-- Hamburger icon -->
         </a>
         
-        <button class="navbar-toggler px-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <a href="#menu-toggle" id="menu-toggle" class="navbar-brand">
-            <span class="navbar-toggler-icon"></span>
-        </a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation"> 
-            <span class="navbar-toggler-icon"></span> 
-        </button>
-        <div class="collapse navbar-collapse" id="navbarsExample02">
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto">
-                    
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle navbar-brand d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{% static "./defaultimg/logo1.png" %}" alt="Logo" class="me-2" style="height: 30px;">
-                       {{request.session.name}}
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{% static 'defaultimg/logo1.png' %}" alt="Logo" class="me-2" style="height: 30px;">
+                        {{ request.session.name }}
                     </a>
-                    <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdownMenuLink" style="z-index: 99999;">
-                        <a class="dropdown-item" href="{% url "student:profile" %}">My-PhotoGraph</a>
-                        <a class="dropdown-item" href="{% url 'main:changePass' %}">Change-Password</a>
-                        <a class="dropdown-item" href="{% url 'main:logout' %}">Sign-Out</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="z-index: 9999;">
+                        <a class="dropdown-item" href="{% url 'student:profile' %}">My Photograph</a>
+                        <a class="dropdown-item" href="{% url 'main:changePass' %}">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'main:logout' %}">Sign Out</a>
                     </div>
-                </ul>
-            </div>                                    
+                </li>
+            </ul>
         </div>
     </nav>
-    <div id="wrapper" class="toggled ">
-        <div id="sidebar-wrapper" class="bg-light">
-            <ul class="sidebar-nav">
-                <aside >
-                    <div  class="sidebar bg-light ">
-                      
-                        <ul class="list-sidebar">
-                            <li> <a href="{% url "student:profile" %}" class="text-dark"><i class="fa fa-user text-dark"></i> <span class="nav-label text-dark">My Profile</span></a> </li>
-                            <li> <a href="{% url "student:attendance" %}" class="text-dark"><i class="fa fa-check-circle text-dark"></i> <span class="nav-label text-dark">Class Attendance</span></a> </li>
-                            <li> <a href="{% url "student:timeTable" %}" class="text-dark"><i class="fa fa-book text-dark"></i> <span class="nav-label text-dark">View Time-Table</span></a> </li>
-                            <li> <a href="{% url "student:marks" %}" class="text-dark"><i class="fa fa-edit text-dark"></i> <span class="nav-label text-dark">Sessional Marks</span></a> </li>
-                            <li> <a href="{% url "student:message" %}" class="text-dark"><i class="fa fa-envelope text-dark"></i> <span class="nav-label text-dark">Messages</span></a> </li>
-                            <li> <a href="https://drive.google.com/drive/folders/1eTxp4mDjGcuDexieUMYrfqAuKBG3S46n" class="text-dark"><i class="fa fa-question-circle text-dark"></i> <span class="nav-label text-dark">Question Paper</span></a> </li>
-                            <li> <a href="{% url "student:notice" %}" class="text-dark"><i class="fa fa-bell text-dark"></i> <span class="nav-label text-dark">Notices</span></a> </li>
-                        </ul> 
-                    
-                  </div> 
-                </aside>
+    
+<div id="wrapper" class="toggled">
+    <div id="sidebar-wrapper" class="bg-light">
+        <div class="sidebar bg-light">
+            <ul class="mt-2">
+                <li><a href="{% url 'student:profile' %}" class="text-dark mt-2"><i class="fa fa-user text-dark"></i> <span>My Profile</span></a></li>
+                <li><a href="{% url 'student:attendance' %}" class="text-dark mt-2"><i class="fa fa-check-circle text-dark"></i> <span>Class Attendance</span></a></li>
+                <li><a href="{% url 'student:timeTable' %}" class="text-dark mt-2"><i class="fa fa-book text-dark"></i> <span>View Time-Table</span></a></li>
+                <li><a href="{% url 'student:marks' %}" class="text-dark mt-2"><i class="fa fa-edit text-dark"></i> <span>Sessional Marks</span></a></li>
+                <li><a href="https://drive.google.com/drive/folders/1eTxp4mDjGcuDexieUMYrfqAuKBG3S46n" class="text-dark mt-2"><i class="fa fa-question-circle text-dark"></i> <span>Question Paper</span></a></li>
+                <li><a href="{% url 'student:notice' %}" class="text-dark mt-2"><i class="fa fa-bell text-dark"></i> <span>Notices</span></a></li>
             </ul>
-        </div> 
-        <div class="container-fluid bg-lightsky" id="page-content-wrapper">
-
-            <div class="container-fluid">
-                {% block content %}
-                {% endblock  %}
-            </div>
-        </div> 
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-      $(function(){
+    <div class="container-fluid bg-lightsky" id="page-content-wrapper">
+        <div class="container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
 
-        $(window).resize(function(e) {
-          if($(window).width()<=768){
-            $("#wrapper").removeClass("toggled");
-          }else{
-            $("#wrapper").addClass("toggled");
-          }
+        $(window).resize(function() {
+            if ($(window).width() <= 768) {
+                $("#wrapper").removeClass("toggled");
+            } else {
+                $("#wrapper").addClass("toggled");
+            }
         });
-      });
-       
-    </script>
+    });
+</script>
 </body>
 </html>
