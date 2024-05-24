@@ -25,12 +25,6 @@ def timeTable(request):
         else:
             schedule_dict[s.day] = [s]
 
-    for day, lectures in schedule_dict.items():
-        for lecture in lectures:
-            if (lecture.time == '12:00'):
-                print("hello baby")
-            else:
-                print((lecture.time))
 
 
 
@@ -77,8 +71,7 @@ def marks(request):
     user = request.user
     student = Student.objects.get(user=user)
     marks = SessionalMarks.objects.filter(student=student)
-    
-    print(marks)
+
     return render(request, 'student/sessional.html', {
         'marks': marks,
         'student': student

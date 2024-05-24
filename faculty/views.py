@@ -33,6 +33,7 @@ def EditAttendance(request):
     selected_subject_id = None
     selected_class_times_id = None
     message = None
+    error = None
 
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -84,22 +85,26 @@ def EditAttendance(request):
                         
                     
             else:    
-
+                
                 for student in students:
                     attendance = Attendance.objects.filter(student=student, subject=subject, date=date.today()).first()
-                    atten = request.POST.get(f"attendance_{ attendance.student.id }") 
-                    if atten == 'present':
-                        status = True
-                    else:
-                        status = False
-
                     if attendance is not None:
+                        atten = request.POST.get(f"attendance_{ attendance.student.id }") 
+                        if atten == 'present':
+                            status = True
+                        else:
+                            status = False
+
+                        if attendance is not None:
+                            
+                            attendance.status = status
+                            attendance.save()
                         
-                        attendance.status = status
-                        attendance.save()
-                    
-                    attendance_list.append(attendance)  
-                    
+                        attendance_list.append(attendance)  
+                    else:
+                        error = "first take attendance"
+        else:     
+            error = "Please select a subject."   
 
 
     return render(request, 'faculty/attendance.html', {
@@ -111,7 +116,8 @@ def EditAttendance(request):
         'selected_subject_id': selected_subject_id,
         'selected_class_times_id': selected_class_times_id,
         'attendance_list': attendance_list,
-        'message': message
+        'message': message,
+        'error': error
     })
 
 @faculty_required
@@ -132,7 +138,6 @@ def notice(request):
         role = Role.objects.get(id=role_id)
         branch = Department.objects.get(id=branch_id)
 
-        print(role, branch, faculty, title, description)
         notice = Notice.objects.create(
             Title=title,
             Description=description,
@@ -157,6 +162,7 @@ def sessionalMarks(request):
     sessionalno = None
     students = []
     sessional_list = []
+    error = None
 
 
 
@@ -164,7 +170,6 @@ def sessionalMarks(request):
         subject_id = request.POST.get('subject')
         sessional_id = request.POST.get('sessional')
         marks = request.POST.get('marks')
-        print(subject_id, sessional_id, marks)
         
         if  subject_id and sessional_id:
             subject = Subject.objects.get(id=subject_id)
@@ -174,7 +179,6 @@ def sessionalMarks(request):
             students = Student.objects.filter(semester=sem, branch=dept)
 
             if request.POST.get('h') == 'Filter':
-                print('filter')
                 a = SessionalMarks.objects.filter(subject=subject, sessionalno=sessionalno)
                 if not a.exists():
                     for student in students:
@@ -199,34 +203,41 @@ def sessionalMarks(request):
                         sessional_marks.marks = marks
                         sessional_marks.save()
                         sessional_list.append(sessional_marks)
-
+        else:
+            error = "Please select a subject and sessional."
+            
     return render(request, 'faculty/Addmarks.html', {
         'subjects': subjects,
         'sessionals': sessionlist,
         'students': students,
         'sessional_list': sessional_list,
         'sessionalno': sessionalno,
+        'error': error,
         
     })
 
 @faculty_required
 def updateSchedule(request):
+    user = request.user 
+    faculty = Employee.objects.get(user=user)   
     semesters = Semester.objects.all()
-    branches = Department.objects.all()
-    subjects = Subject.objects.all()
-    faculties = Employee.objects.all()
+    branche = faculty.department
+    subjects = []
+    faculties = []
     class_times = classTime.objects.all()
     working_days = workingDays.objects.all()
     schedules = Schedule.objects.all()
     selected_sem_id = None
     selected_branch_id = None
     schedule_list = []
+    error = None
 
     if request.method == 'POST':
         action = request.POST.get('action')
         selected_sem_id = request.POST.get('semester')
         selected_branch_id = request.POST.get('branch')
         subjects = Subject.objects.filter(semester=selected_sem_id)
+        faculties = Employee.objects.filter(department=faculty.department)
 
         if selected_sem_id and selected_branch_id:
             sem = Semester.objects.get(id=selected_sem_id)
@@ -252,7 +263,6 @@ def updateSchedule(request):
                     for j in range(1, 8):
                         key = f"{i}_{j}"
                         sub_code = request.POST.get(key)
-                        print(sub_code, i, j)
                         day = workingDays.objects.get(id=i)
                         time = classTime.objects.get(id=j)
                         if sub_code is not None and sub_code != '':
@@ -271,12 +281,12 @@ def updateSchedule(request):
                                 schedule.employee_name = None
                                 schedule.save()
                                 schedule_list.append(schedule)
-
-
+        else:
+            error = "Please select a semester and branch."
 
     return render(request, 'faculty/updateschedule.html', {
         'semesters': semesters,
-        'branches': branches,
+        'branch': branche,
         'subjects': subjects,
         'faculties': faculties,
         'class_times': class_times,
@@ -284,6 +294,7 @@ def updateSchedule(request):
         'selected_sem_id': selected_sem_id,
         'selected_branch_id': selected_branch_id,
         'schedule_list': schedule_list,
+        'error': error
     })
  
 @faculty_required
@@ -293,6 +304,7 @@ def addSubject(request, subId):
     subject = Subject.objects.filter(id=subId).first() if subId != 0 else None
     employees = Employee.objects.filter(department=currFaculty.department)
     semesters = Semester.objects.all()
+    error = None
 
     if request.method == 'POST':
         selected_sem_id = request.POST.get('semester')
@@ -319,15 +331,19 @@ def addSubject(request, subId):
                 subject.semester = semester
                 subject.subject_Type = sub_type
                 subject.save()
-
+            return redirect('faculty:editSubject')
+        
+        else:
+            error = "Please select a semester."
     return render(request, 'faculty/addSubject.html', {
         'semesters': semesters,
         'currFaculty': currFaculty,
         'subject': subject,
         'employees': employees,
+        'error': error
     })
 
-
+@faculty_required
 def addStudent(request):
     user = request.user
     employee = Employee.objects.get(user=user)
@@ -335,6 +351,7 @@ def addStudent(request):
     branch = employee.department
     selected_sem_id = None
     message = "Excel sheet should contain columns: email, name, roll_no, registration_day."
+    error = None
     if request.method == 'POST':
         selected_sem_id = request.POST.get('semester')
         if selected_sem_id:
@@ -354,12 +371,12 @@ def addStudent(request):
                     redirect('faculty:addStudent')
                 else:
                     message = name + " already exists."
-                    break
-                
-
-
-    
-        
+                    
+            return HttpResponse("Students added successfully.")
+        else:
+            error = "Please select a semester."
+            
+      
     return render(request, 'faculty/addStudent.html', {
         'semesters': semesters,
         'branch': branch,
@@ -406,7 +423,6 @@ def editSubject(request):
     subjects = Subject.objects.filter(employee_name=faculty)
     Role = faculty.role
     if faculty.role.name == 'HOD':
-        print('HOD')
         subjects = Subject.objects.filter(branch=faculty.department)
 
     return render(request, 'faculty/editSubject.html', {

@@ -10,7 +10,14 @@
             </ol>
         </div>
     </nav>
-    
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
     <!-- Filter Form -->
     <form method="post" class="form-row align-items-center ">
         {% csrf_token %}
@@ -19,7 +26,7 @@
                 <label for="semester" class="mr-2">Select Semester:</label>
                 <select name="semester" id="semester" class="form-control">
                     {% for sem in semesters %}
-                        <option value="{{ sem.id }}" {% if selected_sem_id == sem.id|stringformat:"s" %}selected{% endif %}>{{ sem.name }}</option>
+                        <option value="{{ sem.id }}" {% if selected_sem_id == sem.id|stringformat:"s" %}selected{% endif %} >{{ sem.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -27,9 +34,7 @@
             <div class="col-12 col-md-6 ">
                 <label for="branch" class="mr-2">Select Branch:</label>
                 <select name="branch" id="branch" class="form-control">
-                    {% for branch in branches %}
-                        <option value="{{ branch.id }}" {% if selected_branch_id == branch.id|stringformat:"s" %}selected{% endif %}>{{ branch.name }}</option>
-                    {% endfor %}
+                        <option value="{{ branch.id }}" readonly >{{ branch.name }}</option>
                 </select>
             </div>
     
@@ -82,9 +87,11 @@
             </table>
         </div>
         {%if request.session.type == 'HOD'%}
+
         <div class="text-center">
             <button type="submit" class="btn btn-success">Save Timetables</button>
         </div>
+        <a href="{% url "faculty:Findex" %}"class = "btn btn-sm btn-danger">Cancel</a>
         {%endif%}
 </form>
 <table class="table-responsive">

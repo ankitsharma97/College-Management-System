@@ -44,6 +44,7 @@ def login(request):
     
     return render(request, 'main/login.html', {'error': error})
 
+
 def logout(request):
     auth_logout(request)
     return redirect('main:index')
@@ -51,6 +52,7 @@ def logout(request):
 @login_required
 def changePass(request):
     user  = request.user 
+    print(user.username)
     error = None
     if request.method == "POST":
         password = request.POST.get('password')

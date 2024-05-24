@@ -11,6 +11,15 @@
             </ol>
         </div>
     </nav>
+
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
     <!-- Filter Form -->
     <form method="post" class="form-row align-items-center mb-4">
         {% csrf_token %}
@@ -85,6 +94,7 @@
         
         <div class="col-12 text-center">
             <button type="submit" class="btn btn-success">Save Attendance</button>
+            <a href="{% url "faculty:Findex" %}"class = "btn btn-sm btn-danger">Cancel</a>
         </div>
     </form>
 </div>
