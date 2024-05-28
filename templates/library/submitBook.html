@@ -1,0 +1,38 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <nav class="d-flex">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'library:Lindex' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Issued Book</li>
+                </ol>
+            </div>
+        </nav>
+        <div class="card-header">
+            <h1 class="mb-0">Issued Book</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="book">Book:</label>
+                    <select class="form-select" id="book" name="book" required>
+                        {% for book in books %}
+                        <option value="{{ book.bookId }}">{{ book.bookId }} - {{ book.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="submit_date">Submit Date:</label>
+                    <input type="date" class="form-control" id="issued_date" name="issued_date">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'library:viewBook' %}" class="btn btn-sm btn-danger">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

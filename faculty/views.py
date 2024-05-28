@@ -12,13 +12,22 @@ from faculty.models import Semester, Department, Subject, Schedule, Employee, Ro
 def index(request):
     today_date = date.today()
     user = request.user
-    faculty = Employee.objects.get(user=user)
-    today_class = Schedule.objects.filter(day=workingDays.objects.get(day=date.today().strftime('%A')), employee_name=faculty)
+    faculty = get_object_or_404(Employee, user=user)
+    today_day_name = today_date.strftime('%A')
+
+    if today_day_name == 'Sunday':
+        today_class = None  # Or handle accordingly, e.g., show a message that there are no classes
+    else:
+        try:
+            today_day = workingDays.objects.get(day=today_day_name)
+            today_class = Schedule.objects.filter(day=today_day, employee_name=faculty)
+        except workingDays.DoesNotExist:
+            today_class = None  # Handle case where the day is not found in workingDays
+
     return render(request, 'faculty/home.html', {
         'today_date': today_date,
         'today_class': today_class
-    }
-    )
+    })
 
 @faculty_required
 def EditAttendance(request):
@@ -145,6 +154,7 @@ def notice(request):
             category=branch,
             by=faculty
         )
+        return redirect('faculty:viewNotice')
 
 
     return render(request, 'faculty/Addnotice.html', {
@@ -268,12 +278,22 @@ def updateSchedule(request):
                         time = classTime.objects.get(id=j)
                         if sub_code is not None and sub_code != '':
                             subject = Subject.objects.get(id=sub_code)
-
                             schedules = Schedule.objects.filter(semester=sem, department=branch, day=day, time=time)
-                            for schedule in schedules:
-                                schedule.subject = subject
-                                schedule.employee_name = subject.employee_name
-                                schedule.save()
+                            if schedules is not None:
+                                for schedule in schedules:
+                                    schedule.subject = subject
+                                    schedule.employee_name = subject.employee_name
+                                    schedule.save()
+                                    schedule_list.append(schedule)
+                            else:
+                                schedule = Schedule.objects.create(
+                                    semester=sem,
+                                    department=branch,
+                                    day=day,
+                                    time=time,
+                                    subject=subject,
+                                    employee_name=subject.employee_name
+                                )
                                 schedule_list.append(schedule)
                         else:
                             schedules = Schedule.objects.filter(semester=sem, department=branch, day=day, time=time)
@@ -530,6 +550,9 @@ def attendanceBySubject(request, subId):
         'attendance_data': attendance_data,
     })
 
+def viewNotice(request):
+    notices = Notice.objects.all().order_by('-date')
+    return render(request, 'faculty/ViewNotice.html', {'notices': notices})
 
 def createEmployee(request):
     # teacher_emails = [

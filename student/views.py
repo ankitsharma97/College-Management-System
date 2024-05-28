@@ -1,3 +1,4 @@
+from enum import auto
 from .forms import StudentProfileForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -5,6 +6,9 @@ from .models import Student, Attendance
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from faculty.models import Schedule, Department, Semester, Subject,  classTime,  Notice,SessionalMarks
+from feeMan.models import Fee
+from library.models import Book
+from django.contrib import auth
 # Create your views here.
 @login_required
 def Sindex(request):
@@ -14,8 +18,10 @@ def Sindex(request):
 
 @login_required
 def timeTable(request):
-    sem = Semester.objects.get(name="4th sem")
-    branch = Department.objects.get(name="IT")
+    user = request.user
+    student = Student.objects.get(user=user)
+    sem = student.semester
+    branch = student.branch
     schedule = Schedule.objects.filter(semester=sem, department=branch)
     schedule_dict = {}
 
@@ -29,7 +35,7 @@ def timeTable(request):
 
 
     subjects = Subject.objects.filter(semester=sem)
-    return render(request, 'student/timeTable.html', {'schedule_dict': schedule_dict, 'subjects': subjects})
+    return render(request, 'student/timeTable.html', {'schedule_dict': schedule_dict, 'subjects': subjects, 'student': student})
 
 @login_required
 def attendance(request):
@@ -79,7 +85,7 @@ def marks(request):
 
 @login_required
 def notice(request):
-    notices = Notice.objects.all()
+    notices = Notice.objects.all().order_by('-date')
     return render(request, 'student/notice.html', {'notices': notices})
 
 @login_required
@@ -130,8 +136,8 @@ def signUp(request):
                 email=email,
                 user=user  # Link the student with the user
             )
-
-            return redirect('Sindex')  # Replace with the actual URL name for success redirection
+            auth.login(request, user)
+            return redirect('student:Sindex')  # Replace with the actual URL name for success redirection
 
     return render(request, 'student/signup.html', {
         'semesters': semesters,
@@ -149,7 +155,44 @@ def editProfile(request):
             form.save()
             return redirect('student:profile')
     return render(request, 'student/editProfile.html', {'form': form})
+ 
+@login_required
+def fee(request):
+    user = request.user
+    student = Student.objects.get(user=user)
+    fees = Fee.objects.filter(student=student)
+    return render(request, 'student/fee.html', {'fees': fees})  
+
+@login_required
+def yourBooks(request):
+    user = request.user
+    student = Student.objects.get(user=user)
+    books = Book.objects.filter(user=student)
+    return render(request, 'student/yourBooks.html', {'books': books})
+
+@login_required
+def yourSemesterBooks(request):
+    user = request.user
+    student = Student.objects.get(user=user)
+    all_books = Book.objects.filter(semester=student.semester, department=student.branch)
     
+    seen_titles = set()
+    unique_books = []
+    
+    for book in all_books:
+        if book.title not in seen_titles:
+            seen_titles.add(book.title)
+            unique_books.append(book)
+    
+    return render(request, 'student/yourSemesterBooks.html', {'books': unique_books})
+
+@login_required
+def searchBook(request):
+    query = request.GET.get('q', '')
+    books = Book.objects.filter(title__icontains=query)
+    return render(request, 'student/searchBook.html', {'books': books, 'query': query})
+    
+ 
  
 def createStudent(request):
     # names = [

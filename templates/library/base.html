@@ -54,8 +54,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
-
-        <a class="navbar-brand d-flex align-items-center  " href="{% url 'student:Sindex' %}">
+        <a class="navbar-brand d-flex align-items-center  " href="{% url "library:Lindex" %}">
             <img src="{% static 'defaultimg/logo1.jpeg' %}" alt="Logo" class="me2" style="height: 50px;">
             <span class=""  >RECAzamgarh</span>
         </a>
@@ -88,16 +87,15 @@
     <div id="sidebar-wrapper" class="bg-light">
         <div class="sidebar bg-light">
             <ul class="mt-2">
-                <li><a href="{% url 'student:profile' %}" class="text-dark mt-2"><i class="fa fa-user text-dark"></i> <span>My Profile</span></a></li>
-                <li><a href="{% url 'student:attendance' %}" class="text-dark mt-2"><i class="fa fa-check-circle text-dark"></i> <span>Class Attendance</span></a></li>
-                <li><a href="{% url 'student:timeTable' %}" class="text-dark mt-2"><i class="fa fa-book text-dark"></i> <span>View Time-Table</span></a></li>
-                <li><a href="{% url 'student:marks' %}" class="text-dark mt-2"><i class="fa fa-edit text-dark"></i> <span>Sessional Marks</span></a></li>
-                <li><a href="{% url 'student:yourBooks' %}" class="text-dark mt-2"><i class="fas fa-book-open  text-dark"></i> <span>Issued Book</span></a></li>
-                <li><a href="{% url 'student:yourSemesterBooks' %}" class="text-dark mt-2"><i class="fa fa-book text-dark"></i> <span>your Semester Books</span></a></li>
-                <li><a href="{% url 'student:searchBook' %}" class="text-dark mt-2"><i class="fa fa-search text-dark"></i> <span>Search Book</span></a></li>
-                <li><a href="{% url 'student:fee' %}" class="text-dark mt-2"><i class="fa fa-paper-plane"></i> <span>View Fees</span></a></li>
-                <li><a href="https://drive.google.com/drive/folders/1eTxp4mDjGcuDexieUMYrfqAuKBG3S46n" class="text-dark mt-2"><i class="fa fa-question-circle text-dark"></i> <span>Question Paper</span></a></li>
-                <li><a href="{% url 'student:notice' %}" class="text-dark mt-2"><i class="fa fa-bell text-dark"></i> <span>Notices</span></a></li>
+                <li><a href="{% url 'library:profile' %}" class="text-dark mt-2"><i class="fa fa-user text-dark"></i> <span>My Profile</span></a></li>
+                <li><a href="{% url 'library:viewFine' %}" class="text-dark mt-2"><i class="fa fa-check-circle text-dark"></i> <span>Calculate Fine</span></a></li>
+                <li><a href="{% url 'library:viewBook' %}" class="text-dark mt-2"><i class="fa fa-book text-dark"></i> <span>View books</span></a></li>
+                <li><a href="{% url 'library:addBook' 0 %}" class="text-dark mt-2"><i class="fas fa-book-open text-dark"></i> <span>Add books</span></a></li>
+                <li><a href="{% url 'library:issueBook' %}" class="text-dark mt-2"><i class="fas fa-book-reader  text-dark"></i> <span>Issue Book</span></a></li>
+                <li><a href="{% url 'library:submitBook' %}" class="text-dark mt-2"><i class="fas fa-book-dead  text-dark"></i> <span>Submit Book</span></a></li>
+                <li><a href="{% url 'library:search' %}" class="text-dark mt-2"><i class="fa fa-search text-dark"></i> <span>Search Book</span></a></li>
+                <li><a href="{% url 'library:notice' %}" class="text-dark mt-2"><i class="fa fa-bell text-dark"></i> <span>Add Notices</span></a></li>
+                <li><a href="{% url 'library:viewNotice' %}" class="text-dark mt-2"><i class="fa fa-bell-o text-dark"></i> <span>Notices</span></a></li>
             </ul>
         </div>
     </div>

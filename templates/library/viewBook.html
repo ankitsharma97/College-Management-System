@@ -1,0 +1,84 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+<nav class="d-flex">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "library:Lindex" %}">Home</a></li>
+            <li class="breadcrumb-item active">Books</li>
+        </ol>
+    </div>
+</nav>
+
+<form method="get" class="mx-4">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="semester">Filter by Semester:</label>
+            <select class="form-select" id="semester" name="semester">
+                <option value="0">All Semesters</option>
+                {% for semester in semesters %}
+                    <option value="{{ semester.id }}">{{ semester.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="department">Filter by Department:</label>
+            <select class="form-select" id="department" name="department">
+                <option value="0">All Departments</option>
+                {% for department in departments %}
+                    <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label>&nbsp;</label><br>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </div>
+    </div>
+</form>
+
+
+<div class="col-sm-12">
+    {% if Role.name == 'Librarian' %}
+    <a class="btn btn-success btn-lg" href="{% url "faculty:addBook" 0 %}">Add Book</a>
+    {% endif %}
+    <h4 class="text-center alert alert-info mt-3">Books</h4>
+    {% if books %}
+    <div class="table-responsive">
+        <table class="table table-bordered bg-light m-1">
+            <thead class="thead-light">
+                <tr class="text-center">
+                    <th scope="col" style="width: 10%;">Book ID</th>
+                    <th scope="col" style="width: 20%;">Title</th>
+                    <th scope="col" style="width: 15%;">Author</th>
+                    <th scope="col" style="width: 10%;">CurrUser</th>
+                    <th scope="col" style="width: 10%;">Issued Date</th>
+                    <th scope="col" style="width: 10%;">Submit Date</th>
+                    {% if Role == 'Librarian' %}
+                    <th scope="col" style="width: 15%;">Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr class="text-center">
+                    <td>{{ book.bookId }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.user }}</td>
+                    <td>{{ book.isseued_date }}</td>
+                    <td>{{ book.submit_date }}</td>
+                    {% if Role == 'Librarian' %}
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="{% url "library:addBook" book.bookId %}">Edit</a>
+                        <a class="btn btn-danger btn-sm my-1" href="{% url "library:deleteBook" book.bookId %}">Del</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

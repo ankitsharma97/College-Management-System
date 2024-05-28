@@ -9,8 +9,6 @@ def get_status(attendance_list, student_id):
             return attendance.status
     return False
 
-
-
 @register.filter
 def get_item(list, index):
     try:

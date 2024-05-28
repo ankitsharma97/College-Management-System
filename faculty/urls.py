@@ -22,4 +22,5 @@ urlpatterns = [
     path('createEmployee/', views.createEmployee, name='createEmployee'),
     path('createSubject/', views.createSubject, name='createSubject'),
     path('attendancwBySubject/<int:subId>', views.attendanceBySubject, name='attendanceBySubject'),
+    path('viewNotice/', views.viewNotice, name='viewNotice'),
 ]

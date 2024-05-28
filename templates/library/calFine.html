@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <nav class="d-flex">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'library:Lindex' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Fines</li>
+                </ol>
+            </div>
+        </nav>
+        <div>
+
+            <a class="btn btn-success btn-lg mx-3" href="{% url "library:addFine"  %}">Add fine</a>
+        </div>
+        <div class="card-header mt-3">
+            <h1 class="mb-0">Fines</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Amount</th>
+                            <th>Fine Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fine in fines %}
+                        <tr>
+                            <td>{{ fine.book }}</td>
+                            <td>{{ fine.amount }}</td>
+                            <td>{{ fine.fine_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">No fines found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

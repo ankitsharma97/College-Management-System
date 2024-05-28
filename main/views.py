@@ -34,7 +34,15 @@ def login(request):
                     request.session['type'] = faculty.role.name
                     request.session['name'] = faculty.name
                     auth_login(request, user)
-                    return redirect('faculty:Findex')
+                    if faculty.role.name == 'HOD' or faculty.role.name == 'Faculty':
+                        request.session['role'] = 'faculty'
+                        return redirect('faculty:Findex')
+                    elif faculty.role.name == 'Librarian':
+                        request.session['role'] = 'librarian'
+                        return redirect('library:Lindex')
+                    elif faculty.role.name == 'Accountant':
+                        request.session['role'] = 'account'
+                        return redirect('feeMan:Aindex')
                 except Employee.DoesNotExist:
                     error = 'Invalid Role for the provided credentials'
             else:

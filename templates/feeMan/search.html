@@ -1,0 +1,43 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'feeMan:Aindex' %}">Home</a></li>
+                <li class="breadcrumb-item active">Search Student</li>
+            </ol>
+        </div>
+    </nav>
+    <form class="d-flex" action="{% url 'feeMan:viewFee' %}" method="GET">            
+        <input class="form-control me-2" type="search" placeholder="Search by Student roll-no" aria-label="Search" name="q">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+
+    <div class="container mt-5">
+        <h1>Search Results</h1>
+        <p>Showing results for: <strong>{{ query }}</strong></p>
+        <div class="row">
+            {% for fee in fees %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ fee.student }}</h5>
+                        <p class="card-text">Roll_no: {{ fee.student.roll_no }}</p>
+                        <p class="card-text">Status: {{ fee.status }}</p>
+                        <p class="card-text">Due: {{ fee.dues }}</p>
+                        <p class="card-text">Date: {{ fee.date }}</p>
+                        <a class="btn btn-warning btn-sm" href="{% url 'feeMan:addFee' fee.id  %}">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-12">
+                <p>No fee record found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

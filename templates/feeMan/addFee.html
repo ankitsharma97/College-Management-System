@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'feeMan:Aindex' %}">Home</a></li>
+                <li class="breadcrumb-item active">{% if fee.id %}Edit{% else %}Add{% endif %} Fee</li>
+            </ol>
+        </div>
+    </nav>
+
+    <h1 class="mb-4">{% if fee.id %}Edit{% else %}Add{% endif %} Fee</h1>
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" class="border p-2">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="student" class="form-label">Student Roll-No</label>
+            <input type="text" class="form-control" id="student" name="student" value="{{ fee.student.roll_no|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="transaction_id" class="form-label">Transaction ID</label>
+            <input type="text" class="form-control" id="transaction_id" name="transaction_id" value="{{ fee.transaction_id|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="payable" class="form-label">Payable</label>
+            <select class="form-select" id="payable" name="payable" required>
+                <option value="">Select Fee Type</option>
+                {% for fee_type in fee_types %}
+                    <option value="{{ fee_type.id }}" {% if fee.payable and fee.payable.id == fee_type.id %}selected{% endif %}>{{ fee_type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="amount" name="amount" value="{{ fee.amount|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ fee.date|default:'' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if fee.id %}Update{% else %}Add{% endif %}</button>
+        <a href="{% url "feeMan:viewFee" %}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

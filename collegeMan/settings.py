@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'main',
     'student',
     'faculty',
-    
+    'library',
+    'feeMan',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,42 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'library:Lindex' %}">Home</a></li>
+                <li class="breadcrumb-item active">Search Book</li>
+            </ol>
+        </div>
+    </nav>
+    <form class="d-flex" action="{% url 'student:searchBook' %}" method="GET">            
+        <input class="form-control me-2" type="search" placeholder="Search by Book Name" aria-label="Search" name="q">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+
+    <div class="container mt-5">
+        <h1>Search Results</h1>
+        <p>Showing results for: <strong>{{ query }}</strong></p>
+        <div class="row">
+            {% for book in books %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">Author: {{ book.author }}</p>
+                        <p class="card-text">Publisher: {{ book.publisher }}</p>
+                        <p class="card-text">Book ID: {{ book.bookId }}</p>
+                        <p class="card-text">Curr Student : {{ book.user }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-12">
+                <p>No books found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

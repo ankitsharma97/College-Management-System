@@ -1,0 +1,58 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="d-flex">
+                <div class="col-md-12 ">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url "library:Lindex" %}">Home</a></li>
+                    </ol>
+                </div>
+            </nav>
+            <div class="card mt-4">
+                <div class="card-header bg-dark text-white">
+                    <h2>Library Statistics</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card text-dark bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Books</h5>
+                                    <p class="card-text">{{ total_books }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-dark bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Issued Books</h5>
+                                    <p class="card-text">{{ issued_books }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-dark bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Overdue Books</h5>
+                                    <p class="card-text">{{ overdue_books }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-dark bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Fines</h5>
+                                    <p class="card-text">{{ total_fines }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

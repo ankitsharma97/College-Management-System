@@ -1,0 +1,38 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Welcome to the Account Management System</h1>
+    <p>Manage your account information, view fees, and more.</p>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">View Fees</h5>
+                    <p class="card-text">Check your fee status, dues, and payment history.</p>
+                    <a href="{% url 'feeMan:viewFee' %}" class="btn btn-primary">View Fees</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Add Fee</h5>
+                    <p class="card-text">Add new fee entries for students.</p>
+                    <a href="{% url 'feeMan:addFee' 0 %}" class="btn btn-success">Add Fee</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Search Students</h5>
+                    <p class="card-text">Search for students by roll number and view their fee details.</p>
+                    <a href="{% url 'feeMan:searchFee' %}" class="btn btn-info">Search Students</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+<nav class="d-flex">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "student:Sindex" %}">Home</a></li>
+            <li class="breadcrumb-item active">Books</li>
+        </ol>
+    </div>
+</nav>
+
+
+<div class="col-sm-12">
+    <h4 class="text-center alert alert-info mt-3">your sem Books</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered bg-light m-1">
+            <thead class="thead-light">
+                <tr class="text-center">
+                    <th scope="col" style="width: 10%;">Book ID</th>
+                    <th scope="col" style="width: 20%;">Title</th>
+                    <th scope="col" style="width: 15%;">Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr class="text-center">
+                    <td>{{ book.bookId }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

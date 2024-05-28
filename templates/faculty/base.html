@@ -46,7 +46,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand d-flex align-items-center" href="#">
             <img src="{% static 'defaultimg/logo1.jpeg' %}" alt="Logo" class="me-2" style="height: 50px;">
-            <span>RECA</span>
+            <span>RECAzamgarh</span>
         </a>
         <button class="navbar-toggler px-2" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -86,6 +86,7 @@
                             {% endif %}
                             <li><a href="{% url 'faculty:sessionalMarks' %}" class="text-dark"><i class="fa fa-edit text-dark"></i> <span class="nav-label text-dark">Update Marks</span></a></li>
                             <li><a href="{% url 'faculty:Addnotice' %}" class="text-dark"><i class="fa fa-bell text-dark"></i> <span class="nav-label text-dark">Add Notices</span></a></li>
+                            <li><a href="{% url 'faculty:viewNotice' %}" class="text-dark"><i class="fa fa-bell-o text-dark"></i> <span class="nav-label text-dark">View Notices</span></a></li>
                         </ul>
                     </div>
                 </aside>

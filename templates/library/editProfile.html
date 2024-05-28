@@ -1,0 +1,104 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <nav class="d-flex">
+        <div class="col-md-12 ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "library:Lindex" %}">Home</a></li>
+                <li class="breadcrumb-item active">UpdateProfile</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-2">
+
+            <div class="col-xl-8">
+                <h2 class="mb-4">Update Profile</h2>
+                <div class="card">
+                    <div class="card-header ">
+                        {% if messages %}
+                        <div class="alert alert-success">{{ messages }}</div>
+                        {% endif %}
+                    <div class="card-body pt-3">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Status:</span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" name="role" class="form-control" value="{{ faculty.role }}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Department: </span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" name="department" class="form-control" value="{{ faculty.department }}">
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Email: </span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="email" name="email" class="form-control" value="{{ faculty.email }}">
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Mobile No.: </span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" name="mobile_no" class="form-control" value="{{ faculty.mobile_no }}">
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <label class="col-lg-3 col-md-4 col-form-label-sm text-black-50">Joining Date:</label>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="date" name="joining_date" class="form-control" value="{{ faculty.joining_date|date:"Y-m-d" }}">
+                                </div>
+                            </div>
+            
+                            <h5 class="card-title mt-4">Personal Details</h5>
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Father Name: </span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" name="father_name" class="form-control" value="{{ faculty.father_name }}">
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <div class="col-lg-3 col-md-4 label">
+                                    <span class="col-form-label-sm text-black-50">Mother Name: </span>
+                                </div>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" name="mother_name" class="form-control" value="{{ faculty.mother_name }}">
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <label class="col-lg-3 col-md-4 col-form-label-sm text-black-50">DoB:</label>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="date" name="dob" class="form-control" value="{{ faculty.dob|date:"Y-m-d" }}">
+                                </div>
+                            </div>
+                            
+            
+                        
+                            <button type="submit" class="btn btn-primary mt-3">Update Profile</button>
+                            <a href="{% url "faculty:profile" %}"class = "btn btn-sm btn-danger mt-3">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+{% endblock %}
